@@ -8,21 +8,48 @@
     html, body {
       margin: 0;
       padding: 0;
-      background: black;
-      color: white;
       height: 100%;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-family: Calibri, sans-serif;
+      background: black;
+      overflow: hidden;
     }
-    h1 {
+
+    #bouncer {
+      position: absolute;
+      color: white;
       font-size: 3em;
+      font-family: Calibri, sans-serif;
       text-transform: uppercase;
     }
   </style>
 </head>
 <body>
-  <h1>COMING TOO SOON</h1>
+  <div id="bouncer">COMING TOO SOON</div>
+
+  <script>
+    const bouncer = document.getElementById("bouncer");
+    let x = 100;
+    let y = 100;
+    let dx = 2;
+    let dy = 2;
+
+    function move() {
+      const rect = bouncer.getBoundingClientRect();
+      const winWidth = window.innerWidth;
+      const winHeight = window.innerHeight;
+
+      if (x + rect.width >= winWidth || x <= 0) dx = -dx;
+      if (y + rect.height >= winHeight || y <= 0) dy = -dy;
+
+      x += dx;
+      y += dy;
+
+      bouncer.style.left = x + "px";
+      bouncer.style.top = y + "px";
+
+      requestAnimationFrame(move);
+    }
+
+    move();
+  </script>
 </body>
 </html>
