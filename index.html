@@ -1,41 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Coming Too Soon</title>
   <style>
     body {
       margin: 0;
-      background: black;
-      color: white;
+      background-color: black;
       overflow: hidden;
       font-family: Calibri, sans-serif;
     }
 
-    .bouncer {
+    #bouncer {
       position: absolute;
+      color: white;
       font-size: 5vw;
       white-space: nowrap;
-      animation: bounce 10s linear infinite;
     }
 
-    @keyframes bounce {
-      0%   { top: 0; left: 0; }
-      25%  { top: 0; left: calc(100% - 100%); }
-      50%  { top: calc(100% - 1em); left: calc(100% - 100%); }
-      75%  { top: calc(100% - 1em); left: 0; }
-      100% { top: 0; left: 0; }
-    }
-
-    /* Mobiele versie – kleinere tekst, zelfde animatie */
     @media (max-width: 600px) {
-      .bouncer {
+      #bouncer {
         font-size: 8vw;
       }
     }
   </style>
 </head>
 <body>
-  <div class="bouncer">COMING TOO SOON</div>
+  <div id="bouncer">COMING TOO SOON</div>
+
+  <script>
+    const bouncer = document.getElementById('bouncer');
+    let x = 100;
+    let y = 100;
+    let dx = 2;
+    let dy = 2;
+
+    function animate() {
+      const rect = bouncer.getBoundingClientRect();
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+
+      if (x + rect.width >= width || x <= 0) dx = -dx;
+      if (y + rect.height >= height || y <= 0) dy = -dy;
+
+      x += dx;
+      y += dy;
+
+      bouncer.style.left = x + 'px';
+      bouncer.style.top = y + 'px';
+
+      requestAnimationFrame(animate);
+    }
+
+    animate();
+  </script>
 </body>
 </html>
