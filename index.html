@@ -31,29 +31,36 @@
 
   <script>
     const bouncer = document.getElementById('bouncer');
-    let x = 100;
-    let y = 100;
+    let x = 50;
+    let y = 50;
     let dx = 2;
     let dy = 2;
 
-    function animate() {
+    function updateSizeAndStart() {
       const rect = bouncer.getBoundingClientRect();
-      const width = window.innerWidth;
-      const height = window.innerHeight;
 
-      if (x + rect.width >= width || x <= 0) dx = -dx;
-      if (y + rect.height >= height || y <= 0) dy = -dy;
+      function animate() {
+        const rect = bouncer.getBoundingClientRect();
+        const width = window.innerWidth;
+        const height = window.innerHeight;
 
-      x += dx;
-      y += dy;
+        if (x + rect.width >= width || x <= 0) dx = -dx;
+        if (y + rect.height >= height || y <= 0) dy = -dy;
 
-      bouncer.style.left = x + 'px';
-      bouncer.style.top = y + 'px';
+        x += dx;
+        y += dy;
 
-      requestAnimationFrame(animate);
+        bouncer.style.left = x + 'px';
+        bouncer.style.top = y + 'px';
+
+        requestAnimationFrame(animate);
+      }
+
+      animate();
     }
 
-    animate();
+    window.addEventListener("load", updateSizeAndStart);
+    window.addEventListener("resize", () => location.reload()); // herstart bij schermrotatie
   </script>
 </body>
 </html>
